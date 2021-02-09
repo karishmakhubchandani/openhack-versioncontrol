@@ -1,0 +1,13 @@
+{
+	"name": "source_southridge_cloudsales_tablelist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_cloudsales_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

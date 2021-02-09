@@ -1,0 +1,17 @@
+{
+	"name": "vanardsels_selfhosted_IR_ls",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "SqlServer",
+		"typeProperties": {
+			"connectionString": "integrated security=True;data source=OHDataOnPremSQL;initial catalog=OnPremRentals",
+			"userName": "southridge",
+			"encryptedCredential": "eyJDcmVkZW50aWFsSWQiOiI0ODBmYTRlNS1kMzY5LTQxMDYtOTM4ZS02NGExZjM5MzA0NjgiLCJWZXJzaW9uIjoiMi4wIiwiQ2xhc3NUeXBlIjoiTWljcm9zb2Z0LkRhdGFQcm94eS5Db3JlLkludGVyU2VydmljZURhdGFDb250cmFjdC5DcmVkZW50aWFsU1UwNkNZMTQifQ=="
+		},
+		"connectVia": {
+			"referenceName": "selfHosted-IR-Vanarsel",
+			"type": "IntegrationRuntimeReference"
+		}
+	}
+}

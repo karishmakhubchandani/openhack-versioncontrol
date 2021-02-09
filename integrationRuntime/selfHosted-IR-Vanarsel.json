@@ -1,0 +1,7 @@
+{
+	"name": "selfHosted-IR-Vanarsel",
+	"properties": {
+		"type": "SelfHosted",
+		"description": "selfHosted-IR-Vanarsel"
+	}
+}

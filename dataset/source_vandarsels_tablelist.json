@@ -1,0 +1,13 @@
+{
+	"name": "source_vandarsels_tablelist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "vanardsels_selfhosted_IR_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

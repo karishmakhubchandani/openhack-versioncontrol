@@ -1,0 +1,35 @@
+{
+	"name": "sink_southridge_adls_json",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sink_adls_sql_ls",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"folderpath": {
+				"type": "string"
+			},
+			"filename": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@dataset().folderpath",
+					"type": "Expression"
+				},
+				"fileSystem": "southridge"
+			}
+		},
+		"schema": {}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

@@ -1,0 +1,121 @@
+{
+	"name": "copy sql cloudsales to adls",
+	"properties": {
+		"activities": [
+			{
+				"name": "List CloudSales DBO Tables",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "AzureSqlSource",
+						"sqlReaderQuery": "select * from INFORMATION_SCHEMA.TABLES where TABLE_TYPE='BASE TABLE' and TABLE_SCHEMA='dbo'",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "source_southridge_cloudsales_tablelist",
+						"type": "DatasetReference"
+					},
+					"firstRowOnly": false
+				}
+			},
+			{
+				"name": "for each cloudsales table",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "List CloudSales DBO Tables",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@activity('List CloudSales DBO Tables').output.value",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "copy data",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "7.00:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "AzureSqlSource",
+									"queryTimeout": "02:00:00",
+									"partitionOption": "None"
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "source_southridge_cloudsales_ds",
+									"type": "DatasetReference",
+									"parameters": {
+										"table_schema": {
+											"value": "@item().TABLE_SCHEMA",
+											"type": "Expression"
+										},
+										"table_name": {
+											"value": "@item().TABLE_NAME",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "sink_southridge_adls_csv",
+									"type": "DatasetReference",
+									"parameters": {
+										"folderpath": {
+											"value": "@concat('raw/couldsales/',item().TABLE_SCHEMA,'_',item().TABLE_NAME)",
+											"type": "Expression"
+										},
+										"filename": {
+											"value": "@concat(item().TABLE_NAME,'.csv')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2021-02-08T08:32:17Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

@@ -1,0 +1,13 @@
+{
+	"name": "source_southridge_cloudstream_tablelist",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "sql_cloudstream_ls",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}
